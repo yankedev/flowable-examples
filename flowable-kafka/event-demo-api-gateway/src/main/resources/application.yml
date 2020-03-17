@@ -17,7 +17,7 @@ spring:
           - id: review-application
             uri: http://localhost:8084/
             predicates:
-              - Path=/reviews/**
+              - Path=/reviews
           - id: dashboard
             uri: http://localhost:8123/dashboard/
             predicates:

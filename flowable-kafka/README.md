@@ -22,7 +22,39 @@ There are 4 applications:
 * [`SentimentAnalysisApplication`](event-demo-sentiment-analysis-app/src/main/java/org/flowable/eventdemo/sentiment/SentimentAnalysisApplication.java) - An embedded Flowable Application which performs Sentiment Analysis (different than the `CustomerCaseApplication`). Uses in memory h2 as a database
 * [`ReviewApplication`](event-demo-review-app/src/main/java/org/flowable/eventdemo/review/ReviewApplication.java) - Reactive Review application responsible for streaming the reviews to Kafka
 
-## Frontend
+## Build the system
+in this folder run
+```mvn install```
+
+
+## Run the system of applications
+
+### Start a new Postgres DB instance using docker
+```docker pull postgres
+mkdir -p docker/volumes/postgres
+docker run --rm --name pg-docker -e POSTGRES_PASSWORD=docker -d -p 5432:5432 -v $PWD/docker/volumes/postgres:/var/lib/postgresql/data postgres
+create user flowable with password flowable
+create DB eventdemo owned by flowable
+```
+
+
+### Start Kafka infrastructure
+```docker-compose -f src/docker/kafka-docker-compose.yml up```
+
+### Start Customer Case App
+```mvn spring-boot:run```
+
+### Start Review App
+```mvn spring-boot:run```
+
+### Start Sentiment Analysis App
+```mvn spring-boot:run```
+
+### Start API gateway
+```mvn spring-boot:run```
+
+
+### Start Frontend
 
 There is a small frontend in the [frontend](frontend) directory.
 
@@ -35,3 +67,10 @@ yarn start
 ```
 
 This starts a UI on [localhost:3000](http://localhost:3000) and a dashboard at [localhost:3000/#dashboard](http://localhost:3000/#dashboard)
+
+
+## Use the system`
+
+Launch kafka client to insert topic and see existing ones
+``docker exec -it ksql-cli ksql http://ksql-server:8088```
+

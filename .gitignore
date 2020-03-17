@@ -7,3 +7,6 @@ target
 .project
 .settings
 .DS_Store
+flowable-kafka/docker/
+flowable-kafka/flowable-enterprise/
+devoxx2019
